@@ -11,1392 +11,736 @@
   <style>
     :root {
       --navy: #0b3c5d;
-      --navy-deep: #08283e;
+      --navy-deep: #062a42;
       --orange: #f29b62;
       --orange-strong: #ea7c37;
-      --mist: #eef3f7;
+      --mist: #f0f5f9;
       --paper: #ffffff;
-      --text: #173042;
-      --muted: #667b8b;
-      --line: rgba(11, 60, 93, 0.12);
+      --text: #1a2e3b;
+      --muted: #5a7186;
+      --line: rgba(11, 60, 93, 0.1);
       --success: #dff4ea;
-      --shadow: 0 22px 60px rgba(8, 40, 62, 0.18);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
+      --radius: 12px;
+      --max-w: 1140px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      min-height: 100%;
       font-family: "Poppins", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(242, 155, 98, 0.28), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(11, 60, 93, 0.2), transparent 32%),
-        linear-gradient(180deg, #f7fafc 0%, #edf3f8 100%);
       color: var(--text);
+      background: var(--paper);
+      line-height: 1.6;
+    }
+    button, input, textarea, select { font: inherit; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
 
-    body {
-      display: grid;
-      place-items: center;
-      padding: 18px;
-      overflow: hidden;
-    }
+    /* ── Wrapper ── */
+    .wrap { width: 90%; max-width: var(--max-w); margin: 0 auto; }
 
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
+    /* ── Site Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
     }
-
-    .app-shell {
-      position: relative;
-      width: min(100%, 430px);
-      height: min(900px, calc(100vh - 36px));
-      min-height: 720px;
-      border-radius: 34px;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.92));
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+    .site-header .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px; gap: 16px;
     }
-
-    .paint-splash,
-    .paint-drop,
-    .paint-streak {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .paint-splash {
-      filter: drop-shadow(0 24px 38px rgba(8, 40, 62, 0.16));
-      opacity: 0.95;
-      mix-blend-mode: multiply;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-
-    .paint-splash.one {
-      top: 70px;
-      left: -40px;
-      width: 240px;
-      height: 210px;
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz48cGF0aCBmaWxsPScjZjI5YjYyJyBkPSdNMTA0IDZjMTQgMCAyMiAxOCAzNCAyNnMzOC0yIDQ2IDIwLTQgNDAtMiA1OCAyNiAzOCA2IDU2LTQ2IDQtNjIgMTItMjQgMzQtNDggMzAtMjYtMjgtNDItMzQtNDAgMi00NC0yNCAyMi0zOCAyOC01NC0xNi0yOC00LTQ2IDM0LTEwIDQ0LTIwIDI0LTI0IDQ0LTI0eicvPjwvc3ZnPg==");
-      animation: blobFloatOne 18s ease-in-out infinite;
-    }
-
-    .paint-splash.two {
-      top: 170px;
-      right: -60px;
-      width: 250px;
-      height: 220px;
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz48cGF0aCBmaWxsPScjMGIzYzVkJyBkPSdNMTIwIDEwYzE0IDAgMjIgMTYgMzIgMjRzMzQgNiA0MiAyNC02IDM0LTQgNTAgMjQgMzQgOCA1MC0zNiAwLTQ4IDgtMTggMzItMzQgMjgtMjAtMjItMzItMjYtMzIgNi00MC0xMCAxMC0zMiAxNi00Ni0xNC0yNC00LTM4IDMwLTggMzgtMTggMjAtMjIgMjYtMjJ6Jy8+PC9zdmc+");
-      animation: blobFloatTwo 20s ease-in-out infinite;
-      animation-delay: -4s;
-    }
-
-    .paint-splash.three {
-      bottom: 110px;
-      left: 12px;
-      width: 190px;
-      height: 170px;
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJz48cGF0aCBmaWxsPScjZjJiODYyJyBkPSdNOTYgOGMxMiAwIDE4IDE0IDI4IDIwczMwIDAgMzggMTgtNCAzMi0yIDQ2IDIwIDI4IDYgNDItMzAgNC00MCAxMC0xOCAyOC0zNCAyNC0xOC0yMC0zMC0yNC0zMCAyLTM0LTE0IDE2LTMwIDIwLTQwLTEyLTIyLTQtMzQgMjYtNiAzNC0xNCAxNi0xOCAyMi0xOHonLz48L3N2Zz4=");
-      animation: blobFloatThree 16s ease-in-out infinite;
-      animation-delay: -7s;
-    }
-
-    .paint-drop {
-      width: 14px;
-      height: 14px;
-      border-radius: 50% 50% 58% 42%;
-      background: linear-gradient(180deg, rgba(242, 155, 98, 0.95), rgba(234, 124, 55, 0.55));
-      box-shadow: 0 8px 16px rgba(242, 155, 98, 0.18);
-      animation: dropFloat 9s ease-in-out infinite;
-    }
-
-    .paint-drop.drop-a {
-      top: 126px;
-      right: 92px;
-      animation-delay: -2s;
-    }
-
-    .paint-drop.drop-b {
-      top: 214px;
-      right: 46px;
-      width: 10px;
-      height: 10px;
-      background: linear-gradient(180deg, rgba(11, 60, 93, 0.95), rgba(11, 60, 93, 0.45));
-      animation-delay: -5s;
-    }
-
-    .paint-streak {
-      top: 120px;
-      left: 50%;
-      width: 180px;
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(242, 155, 98, 0), rgba(242, 155, 98, 0.7), rgba(242, 155, 98, 0));
-      transform: translateX(-50%) rotate(-8deg);
-      opacity: 0.7;
-      animation: shimmer 7s linear infinite;
-    }
-
-    .app-shell::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(242, 155, 98, 0.22), transparent 20%),
-        radial-gradient(circle at 85% 16%, rgba(11, 60, 93, 0.13), transparent 22%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(246, 250, 253, 0.9));
-      pointer-events: none;
-    }
-
-    .status-bar {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 34%;
-      height: 26px;
-      background: rgba(8, 40, 62, 0.92);
-      border-radius: 0 0 18px 18px;
-      z-index: 3;
-    }
-
-    .app-header {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 46px 20px 16px;
-      gap: 12px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .brand-mark {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
+      width: 44px; height: 44px; display: grid; place-items: center;
+      border-radius: 10px;
       background: linear-gradient(145deg, var(--navy), #145983);
+      color: #fff; font-size: 1rem; font-weight: 700;
+      box-shadow: 0 4px 14px rgba(11,60,93,0.22);
+    }
+    .brand-name { font-weight: 700; font-size: 1.1rem; color: var(--navy); }
+    .brand-sub { font-size: 0.72rem; color: var(--muted); display: block; line-height: 1.2; }
+
+    /* Desktop nav */
+    .main-nav { display: flex; align-items: center; gap: 6px; }
+    .main-nav a {
+      text-decoration: none; font-size: 0.88rem; font-weight: 600; color: var(--muted);
+      padding: 8px 14px; border-radius: 8px; transition: color .2s, background .2s;
+    }
+    .main-nav a:hover, .main-nav a.is-active { color: var(--navy); background: var(--mist); }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-lang {
+      border: 1px solid var(--line); border-radius: 8px; padding: 7px 14px;
+      background: transparent; color: var(--navy); font-weight: 600; font-size: 0.82rem;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-lang:hover { background: var(--mist); }
+    .btn-cta-sm {
+      border: 0; border-radius: 8px; padding: 9px 18px;
+      background: var(--orange); color: #fff; font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; transition: background .2s, transform .15s;
+      text-decoration: none;
+    }
+    .btn-cta-sm:hover { background: var(--orange-strong); transform: translateY(-1px); }
+
+    /* Mobile hamburger */
+    .hamburger {
+      display: none; border: 0; background: transparent; cursor: pointer;
+      width: 38px; height: 38px; position: relative;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--navy);
+      position: absolute; left: 8px; transition: transform .25s, opacity .25s;
+    }
+    .hamburger span:nth-child(1) { top: 11px; }
+    .hamburger span:nth-child(2) { top: 18px; }
+    .hamburger span:nth-child(3) { top: 25px; }
+    .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: absolute; top: 70px; left: 0; right: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      padding: 12px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .mobile-nav.is-open { display: block; }
+    .mobile-nav a {
+      display: block; padding: 12px 5%; text-decoration: none;
+      font-weight: 600; color: var(--muted); font-size: 0.95rem;
+    }
+    .mobile-nav a:hover { color: var(--navy); background: var(--mist); }
+
+    @media (max-width: 820px) {
+      .main-nav { display: none; }
+      .hamburger { display: block; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 80px 0 90px;
+      background: linear-gradient(155deg, var(--navy-deep) 0%, var(--navy) 50%, #145983 100%);
       color: #fff;
-      font-size: 1.05rem;
-      font-weight: 700;
-      box-shadow: 0 14px 28px rgba(11, 60, 93, 0.24);
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 500px; height: 500px;
+      right: -180px; bottom: -240px; border-radius: 50%;
+      background: rgba(242,155,98,0.12);
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+    .hero-eyebrow {
+      display: inline-block; padding: 6px 14px; border-radius: 6px;
+      background: rgba(255,255,255,0.12); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.04em; margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem); line-height: 1.08;
+      letter-spacing: -0.03em; font-weight: 800; margin-bottom: 16px;
+    }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+    .hero-note { font-size: 0.95rem; color: rgba(255,255,255,0.75); margin-bottom: 28px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      border: 0; border-radius: 10px; padding: 14px 28px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-strong));
+      color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 24px rgba(234,124,55,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(234,124,55,0.45); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; padding: 12px 26px;
+      background: transparent; color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background .2s, border-color .2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hero-stat {
+      padding: 20px; border-radius: 12px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat strong {
+      display: block; font-size: 1.8rem; font-weight: 800; color: var(--orange);
+    }
+    .hero-stat span { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+
+    @media (max-width: 820px) {
+      .hero { padding: 50px 0 60px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
     }
 
-    .brand-copy {
-      min-width: 0;
+    /* ── Trust Bar ── */
+    .trust-bar {
+      background: var(--mist); border-bottom: 1px solid var(--line);
+      padding: 22px 0;
     }
-
-    .brand-copy strong {
-      display: block;
-      font-size: 0.98rem;
-      letter-spacing: 0.01em;
+    .trust-row {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 28px;
     }
-
-    .brand-copy span {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .trust-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; font-weight: 600; color: var(--navy);
     }
-
-    .quick-chip {
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 14px;
-      background: rgba(255, 255, 255, 0.88);
-      color: var(--navy);
-      font-weight: 600;
-      box-shadow: 0 10px 20px rgba(8, 40, 62, 0.09);
-      cursor: pointer;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .trust-icon {
+      width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center;
+      background: linear-gradient(145deg, rgba(11,60,93,0.1), rgba(242,155,98,0.15));
       flex-shrink: 0;
     }
 
-    .lang-switch {
-      min-width: 58px;
-      text-align: center;
+    /* ── Sections ── */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--mist); }
+    .section-head { text-align: center; max-width: 620px; margin: 0 auto 40px; }
+    .section-eyebrow {
+      display: inline-block; padding: 5px 12px; border-radius: 6px;
+      background: rgba(242,155,98,0.12); color: var(--orange-strong);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 12px;
     }
-
-    .screen-frame {
-      position: relative;
-      z-index: 1;
-      height: calc(100% - 142px);
-      padding: 0 18px 18px;
-    }
-
-    .screen-stack {
-      position: relative;
-      height: 100%;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.78));
-      border: 1px solid rgba(255, 255, 255, 0.9);
-    }
-
-
-    .view {
-      position: absolute;
-      inset: 0;
-      padding: 18px 18px 92px;
-      overflow-y: auto;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(34px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      scrollbar-width: none;
-    }
-
-    .view::-webkit-scrollbar {
-      display: none;
-    }
-
-    .view.is-active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
-
-    .view.is-leaving-left {
-      transform: translateX(-34px);
-      opacity: 0;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(11, 60, 93, 0.08);
-      color: var(--navy);
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-panel {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      padding: 22px;
-      background:
-        radial-gradient(circle at top right, rgba(242, 155, 98, 0.28), transparent 24%),
-        linear-gradient(145deg, var(--navy) 0%, #114f78 100%);
-      color: #fff;
-      box-shadow: 0 24px 48px rgba(11, 60, 93, 0.26);
-    }
-
-    .hero-panel::after {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      right: -72px;
-      bottom: -86px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .hero-panel::before {
-      content: "";
-      position: absolute;
-      top: 22px;
-      right: -28px;
-      width: 130px;
-      height: 44px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(242, 155, 98, 0), rgba(242, 155, 98, 0.9), rgba(242, 155, 98, 0));
-      transform: rotate(18deg);
-      opacity: 0.75;
-    }
-
-    .hero-title {
-      margin: 18px 0 10px;
-      font-size: clamp(2rem, 7vw, 2.65rem);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-subtitle {
-      margin: 0;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    .hero-note {
-      margin: 16px 0 0;
-      font-size: 0.94rem;
-      color: rgba(255, 255, 255, 0.88);
-    }
-
-    .hero-badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .hero-badge {
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.92);
-    }
-
-    .button-row,
-    .grid-two,
-    .stats-grid,
-    .gallery-grid,
-    .contact-grid,
-    .service-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .button-row {
-      margin-top: 20px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .button,
-    .nav-button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    .button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      min-height: 56px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-    }
-
-    .button:hover,
-    .button:focus-visible,
-    .nav-button:hover,
-    .nav-button:focus-visible,
-    .quick-chip:hover,
-    .quick-chip:focus-visible {
-      transform: translateY(-2px);
-      outline: none;
-    }
-
-    .button-primary {
-      background: linear-gradient(135deg, var(--orange), var(--orange-strong));
-      color: #fff;
-      box-shadow: 0 16px 28px rgba(242, 155, 98, 0.34);
-    }
-
-    .button-secondary {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: #fff;
-    }
-
-    .section-head {
-      margin: 22px 0 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 10px;
-    }
-
-    .section-head h2,
-    .section-head h1 {
-      margin: 0;
-      font-size: 1.35rem;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-    }
-
-    .section-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .mini-link {
-      border: 0;
-      background: transparent;
-      color: var(--navy);
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .card,
-    .stat-card,
-    .service-card,
-    .gallery-card,
-    .contact-card,
-    .story-card,
-    .list-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 14px 30px rgba(8, 40, 62, 0.08);
-    }
-
-    .stats-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 18px;
-    }
-
-    .stat-card {
-      padding: 16px;
-    }
-
-    .stat-card strong {
-      display: block;
-      font-size: 1.4rem;
-      color: var(--navy);
-    }
-
-    .stat-card span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .list-card,
-    .story-card,
-    .contact-card {
-      padding: 18px;
-    }
-
-    .story-card p,
-    .contact-card p,
-    .list-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.92rem;
-    }
-
-    .tag-list,
-    .service-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .tag,
-    .service-tags span {
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: var(--mist);
-      color: var(--navy);
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-
-    .service-grid,
-    .gallery-grid,
-    .contact-grid {
-      margin-top: 14px;
-    }
-
-    .service-card {
-      padding: 18px;
-    }
-
-    .service-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .section-head h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800;
+      line-height: 1.15; letter-spacing: -0.02em; color: var(--navy);
       margin-bottom: 10px;
     }
+    .section-head p { color: var(--muted); font-size: 1rem; }
 
-    .service-icon,
-    .gallery-badge,
-    .contact-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 1.1rem;
-      color: var(--navy);
-      background: linear-gradient(145deg, rgba(11, 60, 93, 0.12), rgba(242, 155, 98, 0.2));
+    /* ── About ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .about-text p { color: var(--muted); margin-bottom: 16px; font-size: 0.95rem; }
+    .facts-card {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     }
-
-    .service-card h3,
-    .gallery-card h3,
-    .contact-card h3 {
-      margin: 0;
-      font-size: 1rem;
+    .facts-card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }
+    .fact-row { display: flex; gap: 8px; margin-bottom: 12px; font-size: 0.9rem; }
+    .fact-row strong { color: var(--navy); white-space: nowrap; }
+    .fact-row span { color: var(--muted); }
+    .area-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .area-tag {
+      padding: 7px 14px; border-radius: 6px; background: var(--mist);
+      color: var(--navy); font-size: 0.8rem; font-weight: 600;
     }
+    @media (max-width: 820px) { .about-grid { grid-template-columns: 1fr; } }
 
-    .service-card p,
-    .gallery-card p,
-    .contact-card a,
-    .contact-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.55;
-      text-decoration: none;
+    /* ── Services ── */
+    .service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .service-card {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform .2s, box-shadow .2s;
     }
-
-    .contact-card a,
-    .contact-card h3,
-    .contact-card p {
-      overflow-wrap: anywhere;
-      word-break: break-word;
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center;
+      margin-bottom: 16px;
+      background: linear-gradient(145deg, rgba(11,60,93,0.08), rgba(242,155,98,0.14));
     }
-
-    .service-card a,
-    .contact-card a.inline-link {
-      color: var(--navy);
-      font-weight: 600;
+    .service-icon svg { width: 26px; height: 26px; }
+    .service-card h3 { font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .service-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-tags span {
+      padding: 5px 12px; border-radius: 6px; background: var(--mist);
+      color: var(--navy); font-size: 0.76rem; font-weight: 600;
     }
+    @media (max-width: 600px) { .service-grid { grid-template-columns: 1fr; } }
 
-    .gallery-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    /* ── Gallery ── */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .gallery-card {
-      min-height: 134px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(238, 243, 247, 0.95)),
-        repeating-linear-gradient(45deg, rgba(11, 60, 93, 0.03) 0, rgba(11, 60, 93, 0.03) 8px, rgba(255, 255, 255, 0.6) 8px, rgba(255, 255, 255, 0.6) 16px);
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 24px; min-height: 150px; display: flex; flex-direction: column;
+      justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform .2s;
     }
-
-    .gallery-card span {
-      font-size: 0.8rem;
-      color: var(--navy);
-      font-weight: 700;
+    .gallery-card:hover { transform: translateY(-3px); }
+    .gallery-badge {
+      width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+      font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 14px;
+      background: linear-gradient(145deg, rgba(11,60,93,0.08), rgba(242,155,98,0.14));
     }
+    .gallery-card h3 { font-size: 0.95rem; color: var(--navy); margin-bottom: 4px; }
+    .gallery-card p { color: var(--muted); font-size: 0.82rem; }
+    @media (max-width: 600px) { .gallery-grid { grid-template-columns: 1fr 1fr; } }
 
-    .contact-grid {
-      grid-template-columns: 1fr;
-    }
-
+    /* ── Contact ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
+    .contact-cards { display: grid; gap: 16px; }
     .contact-card {
-      display: grid;
-      gap: 10px;
-      min-width: 0;
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 20px; display: flex; gap: 14px; align-items: flex-start;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     }
-
-    .contact-top {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      min-width: 0;
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, rgba(11,60,93,0.08), rgba(242,155,98,0.14));
     }
-
-    .contact-top > div:last-child {
-      min-width: 0;
+    .contact-icon svg { width: 22px; height: 22px; }
+    .contact-card h3 { font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
+    .contact-card a { color: var(--navy); font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+    .contact-card a:hover { text-decoration: underline; }
+    .contact-card p { color: var(--muted); font-size: 0.85rem; margin-top: 4px; overflow-wrap: anywhere; }
+    .form-card {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     }
-
-    .contact-form {
-      margin-top: 16px;
-      display: grid;
-      gap: 12px;
+    .form-card h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 4px; }
+    .form-card > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+    .contact-form { display: grid; gap: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+    .field input, .field textarea {
+      width: 100%; border: 1px solid var(--line); background: var(--mist);
+      border-radius: 8px; padding: 12px 14px; color: var(--text); font-size: 0.92rem;
+      transition: border-color .2s, box-shadow .2s;
     }
-
-    .whatsapp-float {
-      position: absolute;
-      right: 18px;
-      bottom: 94px;
-      z-index: 5;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 54px;
-      padding: 0 16px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #21c063, #12a14f);
-      color: #fff;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 18px 32px rgba(18, 161, 79, 0.34);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    .field textarea { min-height: 110px; resize: vertical; }
+    .field input:focus, .field textarea:focus {
+      outline: none; border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(242,155,98,0.15);
     }
-
-    .whatsapp-float:hover,
-    .whatsapp-float:focus-visible {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 22px 36px rgba(18, 161, 79, 0.4);
-      outline: none;
-    }
-
-    .whatsapp-float .wa-icon {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      font-size: 1rem;
-    }
-
-    .whatsapp-float .wa-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.05;
-    }
-
-    .whatsapp-float .wa-text small {
-      font-size: 0.68rem;
-      font-weight: 600;
-      opacity: 0.9;
-    }
-
-    .whatsapp-float .wa-text strong {
-      font-size: 0.82rem;
-      letter-spacing: 0.01em;
-    }
-
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-
-    .field label {
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: var(--navy);
-    }
-
-    .field input,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(11, 60, 93, 0.14);
-      background: rgba(248, 251, 253, 0.95);
-      border-radius: 16px;
-      padding: 14px 15px;
-      color: var(--text);
-    }
-
-    .field textarea {
-      min-height: 110px;
-      resize: none;
-    }
-
-    .field input:focus,
-    .field textarea:focus {
-      outline: 2px solid rgba(242, 155, 98, 0.35);
-      border-color: rgba(242, 155, 98, 0.7);
-    }
-
     .form-note {
-      display: none;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: var(--success);
-      color: #1f5d43;
-      font-size: 0.84rem;
-      font-weight: 600;
+      display: none; padding: 12px 14px; border-radius: 8px;
+      background: var(--success); color: #1f5d43; font-size: 0.85rem; font-weight: 600;
     }
+    .form-note.is-visible { display: block; }
+    @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
 
-    .form-note.is-visible {
-      display: block;
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-deep); color: rgba(255,255,255,0.7);
+      padding: 48px 0 28px;
     }
-    .form-helper {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.5;
+    .footer-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px;
+      padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+    .footer-brand .brand-name { color: #fff; font-size: 1.15rem; }
+    .footer-brand .brand-sub { color: rgba(255,255,255,0.5); }
+    .footer-brand p { margin-top: 12px; font-size: 0.88rem; line-height: 1.6; }
+    .site-footer h4 { color: #fff; font-size: 0.9rem; margin-bottom: 14px; }
+    .site-footer a { text-decoration: none; display: block; padding: 3px 0; font-size: 0.88rem; transition: color .2s; }
+    .site-footer a:hover { color: var(--orange); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 20px; font-size: 0.8rem; flex-wrap: wrap; gap: 8px;
     }
-    .home-shortcuts {
-      margin-top: 16px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+    /* ── WhatsApp Float ── */
+    .whatsapp-float {
+      position: fixed; right: 24px; bottom: 24px; z-index: 99;
+      display: inline-flex; align-items: center; gap: 10px;
+      height: 52px; padding: 0 18px; border-radius: 26px;
+      background: linear-gradient(135deg, #21c063, #12a14f);
+      color: #fff; font-weight: 700; text-decoration: none;
+      box-shadow: 0 8px 24px rgba(18,161,79,0.35);
+      transition: transform .2s, box-shadow .2s;
     }
-
-    .shortcut {
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--line);
-      box-shadow: 0 14px 28px rgba(8, 40, 62, 0.07);
+    .whatsapp-float:hover {
+      transform: translateY(-2px); box-shadow: 0 12px 30px rgba(18,161,79,0.45);
     }
+    .wa-icon { font-size: 1.2rem; line-height: 1; }
+    .wa-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .wa-text small { font-size: 0.65rem; font-weight: 600; opacity: 0.9; }
+    .wa-text strong { font-size: 0.82rem; }
 
-    .shortcut strong {
-      display: block;
-      color: var(--navy);
-      font-size: 1rem;
-    }
-
-    .shortcut span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
-
-    .app-nav {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-      z-index: 4;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 8px;
-      padding: 10px;
-      border-radius: 24px;
-      background: rgba(8, 40, 62, 0.94);
-      box-shadow: 0 16px 28px rgba(8, 40, 62, 0.22);
-    }
-
-    .nav-button {
-      display: grid;
-      place-items: center;
-      gap: 4px;
-      min-height: 58px;
-      border-radius: 18px;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease;
-    }
-
-    .nav-button .icon {
-      font-size: 1.08rem;
-      line-height: 1;
-    }
-
-    .nav-button .label {
-      font-size: 0.69rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    .nav-button.is-active {
-      background: linear-gradient(180deg, rgba(242, 155, 98, 0.22), rgba(242, 155, 98, 0.12));
-      color: #fff;
-    }
-
-    .desktop-hint {
-      display: none;
-      margin-top: 8px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    @keyframes blobFloatOne {
-      0% {
-        transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
-      }
-      40% {
-        transform: translate3d(16px, -18px, 0) rotate(-2deg) scale(1.08);
-      }
-      75% {
-        transform: translate3d(-14px, 12px, 0) rotate(-8deg) scale(0.95);
-      }
-      100% {
-        transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
-      }
-    }
-
-    @keyframes blobFloatTwo {
-      0% {
-        transform: translate3d(0, 0, 0) rotate(6deg) scale(1);
-      }
-      45% {
-        transform: translate3d(-12px, -22px, 0) rotate(2deg) scale(1.06);
-      }
-      80% {
-        transform: translate3d(20px, 14px, 0) rotate(9deg) scale(0.94);
-      }
-      100% {
-        transform: translate3d(0, 0, 0) rotate(6deg) scale(1);
-      }
-    }
-
-    @keyframes blobFloatThree {
-      0% {
-        transform: translate3d(0, 0, 0) rotate(-4deg) scale(1);
-      }
-      45% {
-        transform: translate3d(12px, -8px, 0) rotate(-1deg) scale(1.05);
-      }
-      80% {
-        transform: translate3d(-12px, 12px, 0) rotate(-6deg) scale(0.94);
-      }
-      100% {
-        transform: translate3d(0, 0, 0) rotate(-4deg) scale(1);
-      }
-    }
-
-    @keyframes dropFloat {
-      0%,
-      100% {
-        transform: translateY(0) scale(1);
-      }
-      50% {
-        transform: translateY(12px) scale(1.08);
-      }
-    }
-
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-50%) rotate(-8deg) scaleX(0.85);
-        opacity: 0.28;
-      }
-      50% {
-        transform: translateX(-50%) rotate(-8deg) scaleX(1.08);
-        opacity: 0.85;
-      }
-      100% {
-        transform: translateX(-50%) rotate(-8deg) scaleX(0.85);
-        opacity: 0.28;
-      }
-    }
-    @media (min-width: 720px) {
-      body {
-        padding: 26px;
-      }
-
-      .app-shell {
-        width: min(100%, 980px);
-        height: min(820px, calc(100vh - 52px));
-      }
-
-      .app-header {
-        padding: 44px 24px 18px;
-      }
-
-      .header-actions {
-        gap: 12px;
-      }
-
-      .screen-frame {
-        padding: 0 24px 20px;
-      }
-
-      .view {
-        padding: 22px 22px 96px;
-      }
-
-      .home-layout,
-      .about-layout,
-      .contact-layout {
-        display: grid;
-        grid-template-columns: 1.2fr 0.9fr;
-        gap: 18px;
-      }
-
-      .service-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .contact-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .desktop-hint {
-        display: block;
-      }
-
-      .whatsapp-float {
-        right: 22px;
-      }
-    }
-
+    /* ── Utilities ── */
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      *, *::before, *::after {
+        scroll-behavior: auto !important; animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <main class="app-shell" aria-label="Geda Painting mobile app style website">
-    <div class="paint-splash one" aria-hidden="true"></div>
-    <div class="paint-splash two" aria-hidden="true"></div>
-    <div class="paint-splash three" aria-hidden="true"></div>
-    <div class="paint-drop drop-a" aria-hidden="true"></div>
-    <div class="paint-drop drop-b" aria-hidden="true"></div>
-    <div class="paint-streak" aria-hidden="true"></div>
-    <div class="status-bar" aria-hidden="true"></div>
 
-    <header class="app-header">
-      <div class="brand" aria-label="Geda Painting LLC">
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#home" class="brand" aria-label="Geda Painting LLC">
         <div class="brand-mark">GP</div>
-        <div class="brand-copy">
-          <strong>Geda Painting LLC</strong>
-          <span>Residential painting in Hampton Bays, NY</span>
+        <div>
+          <span class="brand-name">Geda Painting LLC</span>
+          <span class="brand-sub">Hampton Bays, NY</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#home" class="is-active" data-nav="home" data-i18n="nav.home">Home</a>
+        <a href="#about" data-nav="about" data-i18n="nav.about">About</a>
+        <a href="#services" data-nav="services" data-i18n="nav.services">Services</a>
+        <a href="#gallery" data-nav="gallery" data-i18n="nav.gallery">Gallery</a>
+        <a href="#contact" data-nav="contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-lang" type="button" id="langToggle" aria-label="Change language">ES</button>
+        <a class="btn-cta-sm" href="#contact" data-i18n="common.freeEstimate">Free Estimate</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" type="button" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="#home" data-nav="home" data-i18n="nav.home">Home</a>
+      <a href="#about" data-nav="about" data-i18n="nav.about">About</a>
+      <a href="#services" data-nav="services" data-i18n="nav.services">Services</a>
+      <a href="#gallery" data-nav="gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#contact" data-nav="contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-eyebrow" data-i18n="home.eyebrow">Residential painting · Bilingual service</span>
+          <h1 data-i18n="home.title">Residential Painting Experts</h1>
+          <p class="hero-sub" data-i18n="home.subtitle">Serving Hampton Bays &amp; The Hamptons</p>
+          <p class="hero-note" data-i18n="home.note">30 years of experience making homes look like new.</p>
+          <div class="hero-btns">
+            <a class="btn-primary" href="tel:6318385977" data-i18n="common.callNow">Call Now</a>
+            <a class="btn-outline" href="#contact" data-i18n="common.freeEstimate">Free Estimate</a>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>30</strong>
+            <span data-i18n="home.statOne">Years of residential painting experience</span>
+          </div>
+          <div class="hero-stat">
+            <strong>2016</strong>
+            <span data-i18n="home.statTwo">Registered LLC in New York</span>
+          </div>
+          <div class="hero-stat">
+            <strong>5</strong>
+            <span data-i18n="home.statThree">Service zones across East Long Island</span>
+          </div>
+          <div class="hero-stat">
+            <strong>2</strong>
+            <span data-i18n="home.statFour">Languages: English &amp; Spanish</span>
+          </div>
         </div>
       </div>
-      <div class="header-actions">
-        <button class="quick-chip lang-switch" type="button" id="langToggle" aria-label="Change language">ES</button>
-        <button class="quick-chip" type="button" data-view-target="contact" data-i18n="common.freeEstimate">Free Estimate</button>
-      </div>
-    </header>
-
-    <div class="screen-frame">
-      <section class="screen-stack" aria-live="polite">
-        <section class="view is-active" id="view-home" data-view="home">
-          <div class="home-layout">
-            <div>
-              <div class="hero-panel">
-                <span class="eyebrow" data-i18n="home.eyebrow">Residential painting • Bilingual service</span>
-                <h1 class="hero-title" data-i18n="home.title">Residential Painting Experts</h1>
-                <p class="hero-subtitle" data-i18n="home.subtitle">Serving Hampton Bays &amp; The Hamptons</p>
-                <p class="hero-note" data-i18n="home.note">30 years of experience making homes look like new.</p>
-                <div class="hero-badge-row">
-                  <span class="hero-badge" data-i18n="home.badgeOne">Painted homes that feel summer-ready</span>
-                  <span class="hero-badge" data-i18n="home.badgeTwo">Interior, exterior, furniture, and repairs</span>
-                </div>
-                <div class="button-row">
-                  <a class="button button-primary" href="tel:6318385977" data-i18n="common.callNow">Call Now</a>
-                  <button class="button button-secondary" type="button" data-view-target="contact" data-i18n="common.freeEstimate">Free Estimate</button>
-                </div>
-              </div>
-
-              <div class="home-shortcuts">
-                <article class="shortcut">
-                  <strong data-i18n="home.shortcutOneTitle">Interior &amp; Exterior</strong>
-                  <span data-i18n="home.shortcutOneText">Detailed prep, clean finishes, and homes ready for summer.</span>
-                </article>
-                <article class="shortcut">
-                  <strong data-i18n="home.shortcutTwoTitle">Residential Care</strong>
-                  <span data-i18n="home.shortcutTwoText">Careful planning and clean execution for beautifully maintained residential spaces.</span>
-                </article>
-              </div>
-            </div>
-
-            <div>
-              <div class="section-head">
-                <div>
-                  <h2 data-i18n="home.whyTitle">Why Homeowners Call Us</h2>
-                  <p data-i18n="home.whyText">Experienced workmanship, reliable service, and finishes that elevate the home.</p>
-                </div>
-              </div>
-
-              <div class="stats-grid">
-                <article class="stat-card">
-                  <strong>30</strong>
-                  <span data-i18n="home.statOne">Years of residential painting experience</span>
-                </article>
-                <article class="stat-card">
-                  <strong>2016</strong>
-                  <span data-i18n="home.statTwo">Registered LLC in New York</span>
-                </article>
-                <article class="stat-card">
-                  <strong>5</strong>
-                  <span data-i18n="home.statThree">Service zones across East Long Island</span>
-                </article>
-                <article class="stat-card">
-                  <strong>2</strong>
-                  <span data-i18n="home.statFour">Languages: English &amp; Spanish</span>
-                </article>
-              </div>
-
-              <article class="list-card" style="margin-top: 14px;">
-                <p data-i18n="home.summary">We help homeowners in Hampton Bays, The Hamptons, South Fork, Nassau County, and Suffolk County refresh interiors, exteriors, and furniture with premium detail and reliable timing.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="view" id="view-about" data-view="about">
-          <div class="about-layout">
-            <div>
-              <div class="section-head">
-                <div>
-                  <span class="eyebrow" data-i18n="about.eyebrow">About Geda Painting</span>
-                  <h2 data-i18n="about.title">Trusted Residential Work, Built for Real Homes</h2>
-                </div>
-              </div>
-
-              <article class="story-card">
-                <p data-i18n="about.storyOne">Geda Painting LLC is a New York limited liability company registered since 2016, built on 30 years of residential painting experience. The company focuses only on occupied homes, where careful prep, clean protection, and dependable execution matter most.</p>
-              </article>
-
-              <article class="story-card" style="margin-top: 14px;">
-                <p data-i18n="about.storyTwo">From walls, kitchens, bedrooms, and baths to exterior siding, trim, doors, and windows, every project is approached with detailed spackle work, sanding, repair, and high-quality finishing so the house feels renewed inside and out.</p>
-              </article>
-            </div>
-
-            <div>
-              <div class="section-head">
-                <div>
-                  <h2 data-i18n="about.quickFactsTitle">Quick Facts</h2>
-                  <p data-i18n="about.quickFactsText">A clear overview of the company, experience, and service areas.</p>
-                </div>
-              </div>
-
-              <article class="list-card">
-                <p><strong data-i18n="about.legalLabel">Legal Name:</strong> <span data-i18n="about.legalValue">Geda Painting Limited Liability Company</span></p>
-                <p style="margin-top: 10px;"><strong data-i18n="about.brandLabel">Visible Brand:</strong> <span data-i18n="about.brandValue">Geda Painting LLC</span></p>
-                <p style="margin-top: 10px;"><strong data-i18n="about.typeLabel">Business Type:</strong> <span data-i18n="about.typeValue">Residential painting services</span></p>
-                <p style="margin-top: 10px;"><strong data-i18n="about.langLabel">Languages:</strong> <span data-i18n="about.langValue">Bilingual: English &amp; Spanish</span></p>
-              </article>
-
-              <div class="tag-list">
-                <span class="tag" data-i18n="areas.hamptonBays">Hampton Bays</span>
-                <span class="tag" data-i18n="areas.hamptons">The Hamptons</span>
-                <span class="tag" data-i18n="areas.southFork">South Fork</span>
-                <span class="tag" data-i18n="areas.nassau">Nassau County</span>
-                <span class="tag" data-i18n="areas.suffolk">Suffolk County</span>
-              </div>
-
-              <article class="list-card" style="margin-top: 14px;">
-                <p data-i18n="about.summary">Perfect for homeowners who want the house fresh, protected, and ready for the summer season without dealing with a commercial-style contractor experience.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="view" id="view-services" data-view="services">
-          <div class="section-head">
-            <div>
-              <span class="eyebrow" data-i18n="services.eyebrow">Services</span>
-              <h2 data-i18n="services.title">Professional Residential Painting Services</h2>
-              <p data-i18n="services.text">Interior, exterior, refinishing, and surface preparation handled with detail and consistency.</p>
-            </div>
-          </div>
-
-          <div class="service-grid">
-            <article class="service-card">
-              <div class="service-top">
-                <div class="service-icon" aria-hidden="true">🎨</div>
-                <h3 data-i18n="services.interiorTitle">Interior Painting</h3>
-              </div>
-              <p data-i18n="services.interiorText">Living rooms, kitchens, bedrooms, bathrooms, and more with full prep including spackle, sanding, and surface correction before the final finish.</p>
-              <div class="service-tags">
-                <span data-i18n="services.interiorTagOne">Clean finishes</span>
-                <span data-i18n="services.interiorTagTwo">Detailed prep</span>
-              </div>
-            </article>
-
-            <article class="service-card">
-              <div class="service-top">
-                <div class="service-icon" aria-hidden="true">🏠</div>
-                <h3 data-i18n="services.exteriorTitle">Exterior Painting</h3>
-              </div>
-              <p data-i18n="services.exteriorText">Facades, siding, windows, doors, and trim prepared and sealed for coastal weather so the property looks sharp and protected.</p>
-              <div class="service-tags">
-                <span data-i18n="services.exteriorTagOne">Summer-ready homes</span>
-                <span data-i18n="services.exteriorTagTwo">Coastal protection</span>
-              </div>
-            </article>
-
-            <article class="service-card">
-              <div class="service-top">
-                <div class="service-icon" aria-hidden="true">🪑</div>
-                <h3 data-i18n="services.furnitureTitle">Furniture Refinishing</h3>
-              </div>
-              <p data-i18n="services.furnitureText">Special techniques with 4 to 5 coats depending on the piece, including refinishing of existing furniture with a smooth, high-quality finish.</p>
-              <div class="service-tags">
-                <span data-i18n="services.furnitureTagOne">4–5 coats</span>
-                <span data-i18n="services.furnitureTagTwo">Special finishes</span>
-              </div>
-            </article>
-
-            <article class="service-card">
-              <div class="service-top">
-                <div class="service-icon" aria-hidden="true">🛠️</div>
-                <h3 data-i18n="services.repairsTitle">Spackle &amp; Repairs</h3>
-              </div>
-              <p data-i18n="services.repairsText">Minor repairs, patching holes, correcting imperfections, and preparing walls and surfaces properly before any paint is applied.</p>
-              <div class="service-tags">
-                <span data-i18n="services.repairsTagOne">Surface repair</span>
-                <span data-i18n="services.repairsTagTwo">Professional prep</span>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="view" id="view-gallery" data-view="gallery">
-          <div class="section-head">
-            <div>
-              <span class="eyebrow" data-i18n="gallery.eyebrow">Gallery</span>
-              <h2 data-i18n="gallery.title">Recent Work Preview</h2>
-              <p data-i18n="gallery.text">Project photos coming soon.</p>
-            </div>
-          </div>
-
-          <div class="gallery-grid">
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">01</div>
-              <div>
-                <h3>Interior Refresh</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">02</div>
-              <div>
-                <h3>Exterior Finish</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">03</div>
-              <div>
-                <h3>Trim &amp; Details</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">04</div>
-              <div>
-                <h3>Furniture Piece</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">05</div>
-              <div>
-                <h3>Wall Repair</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">06</div>
-              <div>
-                <h3>Summer Ready Home</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">07</div>
-              <div>
-                <h3>Kitchen Update</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">08</div>
-              <div>
-                <h3>Refinished Furniture</h3>
-                <p data-i18n="gallery.placeholder">Project photo placeholder</p>
-              </div>
-            </article>
-            <article class="gallery-card">
-              <div class="gallery-badge" aria-hidden="true">09</div>
-              <div>
-                <h3>Door &amp; Window Trim</h3>
-                <p data-i18n="gallery.comingSoon">Project photos coming soon</p>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="view" id="view-contact" data-view="contact">
-          <div class="contact-layout">
-            <div>
-              <div class="section-head">
-                <div>
-                  <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
-                  <h2 data-i18n="contact.title">Request a Free Estimate</h2>
-                  <p data-i18n="contact.text">Call, email, or send a project request to get started with your estimate.</p>
-                </div>
-              </div>
-
-              <div class="contact-grid">
-                <article class="contact-card">
-                  <div class="contact-top">
-                    <div class="contact-icon" aria-hidden="true">📞</div>
-                    <div>
-                      <h3>Phone</h3>
-                      <a class="inline-link" href="tel:16318385977">+1 (631) 838-5977</a>
-                    </div>
-                  </div>
-                  <p data-i18n="contact.phoneText">Tap to call now for residential painting estimates in Hampton Bays and surrounding areas.</p>
-                </article>
-
-                <article class="contact-card">
-                  <div class="contact-top">
-                    <div class="contact-icon" aria-hidden="true">✉️</div>
-                    <div>
-                      <h3>Email</h3>
-                      <a class="inline-link" href="mailto:Gazof@optononline.net">Gazof@optononline.net</a>
-                    </div>
-                  </div>
-                  <p data-i18n="contact.emailText">Send project details, timing, and service needs for a quick follow-up.</p>
-                </article>
-
-                <article class="contact-card">
-                  <div class="contact-top">
-                    <div class="contact-icon" aria-hidden="true">📍</div>
-                    <div>
-                      <h3>Address</h3>
-                      <p>12 Maryland Blvd, Hampton Bays, NY 11946</p>
-                    </div>
-                  </div>
-                  <p data-i18n="contact.addressText">Serving homeowners across Hampton Bays, The Hamptons, South Fork, Nassau County, and Suffolk County.</p>
-                </article>
-
-                <article class="contact-card">
-                  <div class="contact-top">
-                    <div class="contact-icon" aria-hidden="true">🗣️</div>
-                    <div>
-                      <h3 data-i18n="contact.bilingualTitle">Bilingual Support</h3>
-                      <p data-i18n="contact.bilingualText">English &amp; Spanish</p>
-                    </div>
-                  </div>
-                  <p data-i18n="contact.bilingualNote">Clear communication for homeowners who want a smooth and professional process.</p>
-                </article>
-              </div>
-            </div>
-
-            <div>
-              <article class="contact-card">
-                <h3 data-i18n="contact.formTitle">Quick Request Form</h3>
-                <p style="margin-top: 8px;" data-i18n="contact.formText">Send a request directly to our email inbox.</p>
-
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/gerardoazofeifa69@gmail.com" method="POST" target="formsubmitFrame">
-                  <input type="hidden" name="_subject" value="New estimate request from Geda Painting website">
-                  <input type="hidden" name="_template" value="table">
-                  <input type="hidden" name="_next" value="about:blank">
-                  <input type="text" name="_honey" style="display:none">
-                  <div class="field">
-                    <label for="name" data-i18n="contact.nameLabel">Name</label>
-                    <input id="name" name="name" type="text" placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder" required>
-                  </div>
-
-                  <div class="field">
-                    <label for="email" data-i18n="contact.emailLabel">Email</label>
-                    <input id="email" name="email" type="email" placeholder="Your email address" data-i18n-placeholder="contact.emailPlaceholder" required>
-                  </div>
-
-                  <div class="field">
-                    <label for="phone" data-i18n="contact.phoneLabel">Phone</label>
-                    <input id="phone" name="phone" type="tel" placeholder="Best callback number" data-i18n-placeholder="contact.phonePlaceholder" required>
-                  </div>
-
-                  <div class="field">
-                    <label for="message" data-i18n="contact.messageLabel">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your painting project" data-i18n-placeholder="contact.messagePlaceholder" required></textarea>
-                  </div>
-
-                  <button class="button button-primary" type="submit" id="submitButton" data-i18n="contact.sendButton">Send Request</button>
-                  <div class="form-note" id="formNote"></div>
-                </form>
-                <iframe class="visually-hidden" name="formsubmitFrame" title="Form submission target"></iframe>
-              </article>
-            </div>
-          </div>
-        </section>
-      </section>
     </div>
+  </section>
 
-    <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/16318385977" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp chat">
-      <span class="wa-icon" aria-hidden="true">✆</span>
-      <span class="wa-text">
-        <small data-i18n="common.whatsappSmall">WhatsApp</small>
-        <strong data-i18n="common.whatsappStrong">Quick Quote</strong>
-      </span>
-    </a>
+  <!-- ═══ TRUST BAR ═══ -->
+  <div class="trust-bar">
+    <div class="wrap">
+      <div class="trust-row">
+        <div class="trust-item">
+          <div class="trust-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span data-i18n="home.badgeOne">Painted homes that feel summer-ready</span>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+          </div>
+          <span data-i18n="home.badgeTwo">Interior, exterior, furniture, and repairs</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <nav class="app-nav" aria-label="Primary navigation">
-      <button class="nav-button is-active" type="button" data-view-target="home" aria-current="page">
-        <span class="icon" aria-hidden="true">⌂</span>
-        <span class="label" data-i18n="nav.home">Home</span>
-      </button>
-      <button class="nav-button" type="button" data-view-target="about">
-        <span class="icon" aria-hidden="true">○</span>
-        <span class="label" data-i18n="nav.about">About</span>
-      </button>
-      <button class="nav-button" type="button" data-view-target="services">
-        <span class="icon" aria-hidden="true">▣</span>
-        <span class="label" data-i18n="nav.services">Services</span>
-      </button>
-      <button class="nav-button" type="button" data-view-target="gallery">
-        <span class="icon" aria-hidden="true">▤</span>
-        <span class="label" data-i18n="nav.gallery">Gallery</span>
-      </button>
-      <button class="nav-button" type="button" data-view-target="contact">
-        <span class="icon" aria-hidden="true">✦</span>
-        <span class="label" data-i18n="nav.contact">Contact</span>
-      </button>
-    </nav>
-  </main>
+  <!-- ═══ ABOUT ═══ -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow" data-i18n="about.eyebrow">About Geda Painting</span>
+        <h2 data-i18n="about.title">Trusted Residential Work, Built for Real Homes</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p data-i18n="about.storyOne">Geda Painting LLC is a New York limited liability company registered since 2016, built on 30 years of residential painting experience. The company focuses only on occupied homes, where careful prep, clean protection, and dependable execution matter most.</p>
+          <p data-i18n="about.storyTwo">From walls, kitchens, bedrooms, and baths to exterior siding, trim, doors, and windows, every project is approached with detailed spackle work, sanding, repair, and high-quality finishing so the house feels renewed inside and out.</p>
+          <p data-i18n="about.summary">Perfect for homeowners who want the house fresh, protected, and ready for the summer season without dealing with a commercial-style contractor experience.</p>
+        </div>
+        <div>
+          <div class="facts-card">
+            <h3 data-i18n="about.quickFactsTitle">Quick Facts</h3>
+            <div class="fact-row"><strong data-i18n="about.legalLabel">Legal Name:</strong> <span data-i18n="about.legalValue">Geda Painting Limited Liability Company</span></div>
+            <div class="fact-row"><strong data-i18n="about.brandLabel">Visible Brand:</strong> <span data-i18n="about.brandValue">Geda Painting LLC</span></div>
+            <div class="fact-row"><strong data-i18n="about.typeLabel">Business Type:</strong> <span data-i18n="about.typeValue">Residential painting services</span></div>
+            <div class="fact-row"><strong data-i18n="about.langLabel">Languages:</strong> <span data-i18n="about.langValue">Bilingual: English &amp; Spanish</span></div>
+          </div>
+          <div class="area-tags">
+            <span class="area-tag" data-i18n="areas.hamptonBays">Hampton Bays</span>
+            <span class="area-tag" data-i18n="areas.hamptons">The Hamptons</span>
+            <span class="area-tag" data-i18n="areas.southFork">South Fork</span>
+            <span class="area-tag" data-i18n="areas.nassau">Nassau County</span>
+            <span class="area-tag" data-i18n="areas.suffolk">Suffolk County</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <p class="desktop-hint" data-i18n="common.desktopHint">Single-file mobile-app style website for Geda Painting LLC</p>
+  <!-- ═══ SERVICES ═══ -->
+  <section class="section section-alt" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow" data-i18n="services.eyebrow">Services</span>
+        <h2 data-i18n="services.title">Professional Residential Painting Services</h2>
+        <p data-i18n="services.text">Interior, exterior, refinishing, and surface preparation handled with detail and consistency.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 data-i18n="services.interiorTitle">Interior Painting</h3>
+          <p data-i18n="services.interiorText">Living rooms, kitchens, bedrooms, bathrooms, and more with full prep including spackle, sanding, and surface correction before the final finish.</p>
+          <div class="service-tags">
+            <span data-i18n="services.interiorTagOne">Clean finishes</span>
+            <span data-i18n="services.interiorTagTwo">Detailed prep</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 data-i18n="services.exteriorTitle">Exterior Painting</h3>
+          <p data-i18n="services.exteriorText">Facades, siding, windows, doors, and trim prepared and sealed for coastal weather so the property looks sharp and protected.</p>
+          <div class="service-tags">
+            <span data-i18n="services.exteriorTagOne">Summer-ready homes</span>
+            <span data-i18n="services.exteriorTagTwo">Coastal protection</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><rect x="8" y="3" width="8" height="10" rx="1"/></svg>
+          </div>
+          <h3 data-i18n="services.furnitureTitle">Furniture Refinishing</h3>
+          <p data-i18n="services.furnitureText">Special techniques with 4 to 5 coats depending on the piece, including refinishing of existing furniture with a smooth, high-quality finish.</p>
+          <div class="service-tags">
+            <span data-i18n="services.furnitureTagOne">4–5 coats</span>
+            <span data-i18n="services.furnitureTagTwo">Special finishes</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3 data-i18n="services.repairsTitle">Spackle &amp; Repairs</h3>
+          <p data-i18n="services.repairsText">Minor repairs, patching holes, correcting imperfections, and preparing walls and surfaces properly before any paint is applied.</p>
+          <div class="service-tags">
+            <span data-i18n="services.repairsTagOne">Surface repair</span>
+            <span data-i18n="services.repairsTagTwo">Professional prep</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GALLERY ═══ -->
+  <section class="section" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow" data-i18n="gallery.eyebrow">Gallery</span>
+        <h2 data-i18n="gallery.title">Recent Work Preview</h2>
+        <p data-i18n="gallery.text">Project photos coming soon.</p>
+      </div>
+      <div class="gallery-grid">
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">01</div>
+          <div><h3>Interior Refresh</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">02</div>
+          <div><h3>Exterior Finish</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">03</div>
+          <div><h3>Trim &amp; Details</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">04</div>
+          <div><h3>Furniture Piece</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">05</div>
+          <div><h3>Wall Repair</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">06</div>
+          <div><h3>Summer Ready Home</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">07</div>
+          <div><h3>Kitchen Update</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">08</div>
+          <div><h3>Refinished Furniture</h3><p data-i18n="gallery.placeholder">Project photo placeholder</p></div>
+        </article>
+        <article class="gallery-card">
+          <div class="gallery-badge" aria-hidden="true">09</div>
+          <div><h3>Door &amp; Window Trim</h3><p data-i18n="gallery.comingSoon">Project photos coming soon</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="section section-alt" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow" data-i18n="contact.eyebrow">Contact</span>
+        <h2 data-i18n="contact.title">Request a Free Estimate</h2>
+        <p data-i18n="contact.text">Call, email, or send a project request to get started with your estimate.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-cards">
+          <article class="contact-card">
+            <div class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <h3>Phone</h3>
+              <a href="tel:16318385977">+1 (631) 838-5977</a>
+              <p data-i18n="contact.phoneText">Tap to call now for residential painting estimates in Hampton Bays and surrounding areas.</p>
+            </div>
+          </article>
+          <article class="contact-card">
+            <div class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <a href="mailto:Gazof@optononline.net">Gazof@optononline.net</a>
+              <p data-i18n="contact.emailText">Send project details, timing, and service needs for a quick follow-up.</p>
+            </div>
+          </article>
+          <article class="contact-card">
+            <div class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h3>Address</h3>
+              <p style="margin-top:0;">12 Maryland Blvd, Hampton Bays, NY 11946</p>
+              <p data-i18n="contact.addressText">Serving homeowners across Hampton Bays, The Hamptons, South Fork, Nassau County, and Suffolk County.</p>
+            </div>
+          </article>
+          <article class="contact-card">
+            <div class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0b3c5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h3 data-i18n="contact.bilingualTitle">Bilingual Support</h3>
+              <p style="margin-top:0; font-weight:600; color:var(--navy);" data-i18n="contact.bilingualText">English &amp; Spanish</p>
+              <p data-i18n="contact.bilingualNote">Clear communication for homeowners who want a smooth and professional process.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="form-card">
+          <h3 data-i18n="contact.formTitle">Quick Request Form</h3>
+          <p data-i18n="contact.formText">Send a request directly to our email inbox.</p>
+          <form class="contact-form" id="contactForm" action="https://formsubmit.co/gerardoazofeifa69@gmail.com" method="POST" target="formsubmitFrame">
+            <input type="hidden" name="_subject" value="New estimate request from Geda Painting website">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="about:blank">
+            <input type="text" name="_honey" style="display:none">
+            <div class="field">
+              <label for="name" data-i18n="contact.nameLabel">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder" required>
+            </div>
+            <div class="field">
+              <label for="email" data-i18n="contact.emailLabel">Email</label>
+              <input id="email" name="email" type="email" placeholder="Your email address" data-i18n-placeholder="contact.emailPlaceholder" required>
+            </div>
+            <div class="field">
+              <label for="phone" data-i18n="contact.phoneLabel">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="Best callback number" data-i18n-placeholder="contact.phonePlaceholder" required>
+            </div>
+            <div class="field">
+              <label for="message" data-i18n="contact.messageLabel">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your painting project" data-i18n-placeholder="contact.messagePlaceholder" required></textarea>
+            </div>
+            <button class="btn-primary" type="submit" id="submitButton" style="width:100%; justify-content:center;" data-i18n="contact.sendButton">Send Request</button>
+            <div class="form-note" id="formNote"></div>
+          </form>
+          <iframe class="visually-hidden" name="formsubmitFrame" title="Form submission target"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name">Geda Painting LLC</span>
+          <span class="brand-sub">Hampton Bays, NY</span>
+          <p data-i18n="home.summary">We help homeowners in Hampton Bays, The Hamptons, South Fork, Nassau County, and Suffolk County refresh interiors, exteriors, and furniture with premium detail and reliable timing.</p>
+        </div>
+        <div>
+          <h4 data-i18n="nav.services">Services</h4>
+          <a href="#services" data-i18n="services.interiorTitle">Interior Painting</a>
+          <a href="#services" data-i18n="services.exteriorTitle">Exterior Painting</a>
+          <a href="#services" data-i18n="services.furnitureTitle">Furniture Refinishing</a>
+          <a href="#services" data-i18n="services.repairsTitle">Spackle &amp; Repairs</a>
+        </div>
+        <div>
+          <h4 data-i18n="contact.eyebrow">Contact</h4>
+          <a href="tel:16318385977">+1 (631) 838-5977</a>
+          <a href="mailto:Gazof@optononline.net">Gazof@optononline.net</a>
+          <a href="#contact">12 Maryland Blvd, Hampton Bays, NY 11946</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2016–2026 Geda Painting LLC. All rights reserved.</span>
+        <span data-i18n="home.shortcutOneTitle">Interior &amp; Exterior</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ WHATSAPP ═══ -->
+  <a class="whatsapp-float" id="whatsappButton" href="https://wa.me/16318385977" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp chat">
+    <span class="wa-icon" aria-hidden="true">✆</span>
+    <span class="wa-text">
+      <small data-i18n="common.whatsappSmall">WhatsApp</small>
+      <strong data-i18n="common.whatsappStrong">Quick Quote</strong>
+    </span>
+  </a>
 
   <script>
     (function () {
-      const views = Array.from(document.querySelectorAll('[data-view]'));
-      const triggers = Array.from(document.querySelectorAll('[data-view-target]'));
-      const form = document.getElementById('contactForm');
-      const formNote = document.getElementById('formNote');
-      const submitButton = document.getElementById('submitButton');
-      const langToggle = document.getElementById('langToggle');
-      const whatsappButton = document.getElementById('whatsappButton');
-      let activeView = 'home';
-      const translations = {
+      var form = document.getElementById('contactForm');
+      var formNote = document.getElementById('formNote');
+      var submitButton = document.getElementById('submitButton');
+      var langToggle = document.getElementById('langToggle');
+      var whatsappButton = document.getElementById('whatsappButton');
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+      var navLinks = document.querySelectorAll('[data-nav]');
+
+      var translations = {
         en: {
           common: {
             freeEstimate: 'Free Estimate',
             callNow: 'Call Now',
             whatsappSmall: 'WhatsApp',
-            whatsappStrong: 'Quick Quote',
-            desktopHint: 'Single-file mobile-app style website for Geda Painting LLC'
+            whatsappStrong: 'Quick Quote'
           },
           nav: {
             home: 'Home',
@@ -1406,7 +750,7 @@
             contact: 'Contact'
           },
           home: {
-            eyebrow: 'Residential painting • Bilingual service',
+            eyebrow: 'Residential painting · Bilingual service',
             title: 'Residential Painting Experts',
             subtitle: 'Serving Hampton Bays & The Hamptons',
             note: '30 years of experience making homes look like new.',
@@ -1462,7 +806,7 @@
             exteriorTagTwo: 'Coastal protection',
             furnitureTitle: 'Furniture Refinishing',
             furnitureText: 'Special techniques with 4 to 5 coats depending on the piece, including refinishing of existing furniture with a smooth, high-quality finish.',
-            furnitureTagOne: '4–5 coats',
+            furnitureTagOne: '4\u20135 coats',
             furnitureTagTwo: 'Special finishes',
             repairsTitle: 'Spackle & Repairs',
             repairsText: 'Minor repairs, patching holes, correcting imperfections, and preparing walls and surfaces properly before any paint is applied.',
@@ -1511,8 +855,7 @@
             freeEstimate: 'Estimado Gratis',
             callNow: 'Llamar Ahora',
             whatsappSmall: 'WhatsApp',
-            whatsappStrong: 'Cotización Rápida',
-            desktopHint: 'Sitio web en un solo archivo con estilo app para Geda Painting LLC'
+            whatsappStrong: 'Cotización Rápida'
           },
           nav: {
             home: 'Inicio',
@@ -1522,7 +865,7 @@
             contact: 'Contacto'
           },
           home: {
-            eyebrow: 'Pintura residencial • Servicio bilingüe',
+            eyebrow: 'Pintura residencial · Servicio bilingüe',
             title: 'Expertos en Pintura Residencial',
             subtitle: 'Atendiendo Hampton Bays y The Hamptons',
             note: '30 años de experiencia haciendo que las casas luzcan como nuevas.',
@@ -1578,7 +921,7 @@
             exteriorTagTwo: 'Protección costera',
             furnitureTitle: 'Restauración de Muebles',
             furnitureText: 'Técnicas especiales con 4 a 5 manos según la pieza, incluyendo restauración de muebles existentes con un acabado fino y uniforme.',
-            furnitureTagOne: '4–5 manos',
+            furnitureTagOne: '4\u20135 manos',
             furnitureTagTwo: 'Acabados especiales',
             repairsTitle: 'Spackle y Reparaciones',
             repairsText: 'Reparaciones menores, relleno de agujeros, corrección de imperfecciones y preparación profesional antes de aplicar pintura.',
@@ -1623,8 +966,9 @@
           }
         }
       };
-      const defaultLanguage = navigator.language && navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en';
-      let currentLanguage = localStorage.getItem('geda-language') || defaultLanguage;
+
+      var defaultLanguage = navigator.language && navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en';
+      var currentLanguage = localStorage.getItem('geda-language') || defaultLanguage;
 
       function getValue(path) {
         return path.split('.').reduce(function (acc, part) {
@@ -1633,7 +977,7 @@
       }
 
       function updateWhatsappLink() {
-        const message = encodeURIComponent(getValue('whatsapp.message'));
+        var message = encodeURIComponent(getValue('whatsapp.message'));
         whatsappButton.href = 'https://wa.me/16318385977?text=' + message;
       }
 
@@ -1641,91 +985,60 @@
         currentLanguage = language;
         localStorage.setItem('geda-language', language);
         document.documentElement.lang = language;
-        document.querySelectorAll('[data-i18n]').forEach(function (element) {
-          const value = getValue(element.dataset.i18n);
-          if (value) {
-            element.textContent = value;
-          }
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var val = getValue(el.dataset.i18n);
+          if (val) el.textContent = val;
         });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (element) {
-          const value = getValue(element.dataset.i18nPlaceholder);
-          if (value) {
-            element.setAttribute('placeholder', value);
-          }
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+          var val = getValue(el.dataset.i18nPlaceholder);
+          if (val) el.setAttribute('placeholder', val);
         });
         langToggle.textContent = language === 'en' ? 'ES' : 'EN';
         updateWhatsappLink();
       }
 
-      function switchView(targetView) {
-        if (!targetView || targetView === activeView) {
-          return;
-        }
+      /* Hamburger */
+      hamburger.addEventListener('click', function () {
+        hamburger.classList.toggle('is-open');
+        mobileNav.classList.toggle('is-open');
+      });
 
-        const currentIndex = views.findIndex(function (view) {
-          return view.dataset.view === activeView;
-        });
-        const nextIndex = views.findIndex(function (view) {
-          return view.dataset.view === targetView;
-        });
-
-        const current = views[currentIndex];
-        const next = views[nextIndex];
-        if (!next) {
-          return;
-        }
-
-        views.forEach(function (view) {
-          view.classList.remove('is-leaving-left');
-        });
-
-        if (current) {
-          current.classList.remove('is-active');
-          if (nextIndex < currentIndex) {
-            current.classList.add('is-leaving-left');
-            window.setTimeout(function () {
-              current.classList.remove('is-leaving-left');
-            }, 350);
-          }
-        }
-
-        next.scrollTop = 0;
-        next.classList.add('is-active');
-
-        triggers.forEach(function (trigger) {
-          const isMatch = trigger.dataset.viewTarget === targetView;
-          trigger.classList.toggle('is-active', isMatch && trigger.classList.contains('nav-button'));
-          if (trigger.classList.contains('nav-button')) {
-            if (isMatch) {
-              trigger.setAttribute('aria-current', 'page');
-            } else {
-              trigger.removeAttribute('aria-current');
-            }
-          }
-        });
-
-        activeView = targetView;
-      }
-
-      triggers.forEach(function (trigger) {
-        trigger.addEventListener('click', function () {
-          switchView(trigger.dataset.viewTarget);
+      /* Close mobile nav on link click */
+      mobileNav.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          hamburger.classList.remove('is-open');
+          mobileNav.classList.remove('is-open');
         });
       });
+
+      /* Active nav highlight on scroll */
+      var sections = document.querySelectorAll('section[id]');
+      function updateActiveNav() {
+        var scrollY = window.scrollY + 100;
+        sections.forEach(function (sec) {
+          var top = sec.offsetTop;
+          var h = sec.offsetHeight;
+          var id = sec.getAttribute('id');
+          if (scrollY >= top && scrollY < top + h) {
+            navLinks.forEach(function (link) {
+              link.classList.toggle('is-active', link.getAttribute('data-nav') === id);
+            });
+          }
+        });
+      }
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
 
       langToggle.addEventListener('click', function () {
         applyLanguage(currentLanguage === 'en' ? 'es' : 'en');
       });
 
       if (form) {
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', function () {
           formNote.classList.remove('is-visible');
           submitButton.disabled = true;
           submitButton.textContent = getValue('contact.sending');
-
           formNote.textContent = getValue('contact.success');
           formNote.classList.add('is-visible');
-
           window.setTimeout(function () {
             submitButton.disabled = false;
             submitButton.textContent = getValue('contact.sendButton');
@@ -1734,6 +1047,7 @@
       }
 
       applyLanguage(currentLanguage);
+      updateActiveNav();
     })();
   </script>
 </body>
