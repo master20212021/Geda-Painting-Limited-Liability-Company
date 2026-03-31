@@ -341,6 +341,9 @@
     }
     .gallery-all-link:hover { background: var(--navy-deep); }
     .gallery-footer { text-align: center; margin-top: 24px; }
+    .gallery-extra { display: none; }
+    .gallery-grid.show-all .gallery-extra { display: block; }
+    button.gallery-all-link { border: none; }
     @media (max-width: 600px) { .gallery-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 400px) { .gallery-grid { grid-template-columns: 1fr; } }
 
@@ -681,91 +684,135 @@
         <h2 data-i18n="gallery.title">Recent Work</h2>
         <p data-i18n="gallery.text">A look at completed residential projects across Hampton Bays and the surrounding areas.</p>
       </div>
-      <div class="gallery-grid">
+      <div class="gallery-grid" id="galleryGrid">
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczN7-1N8AGk7qiSJq5DjxnEcATCRD-EQyME2kiYTOG2yjBPLqkqK-DucNE2tJviPHlx6Bc4Kdx9Z_MBC4N9ZRw6AWj7bxAJ_xf5pEQvINq2X9qtqf4I=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczN7-1N8AGk7qiSJq5DjxnEcATCRD-EQyME2kiYTOG2yjBPLqkqK-DucNE2tJviPHlx6Bc4Kdx9Z_MBC4N9ZRw6AWj7bxAJ_xf5pEQvINq2X9qtqf4I=w600-h400-k-no" alt="Colonial estate exterior painted sage green with white columns" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">01</div><div><h3>Colonial Estate Exterior</h3><p class="gallery-desc">Freshly painted sage green siding with crisp white trim — a Hampton Bays colonial with full-length front porch and white columns.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">01</div><div><h3 data-i18n="gallery.c01t">Colonial Estate Exterior</h3><p class="gallery-desc" data-i18n="gallery.c01d">Freshly painted sage green siding with crisp white trim — a Hampton Bays colonial with full-length front porch and white columns.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOgteb_3qX9KgndjuYUJWZfuu7I05L99PZ9AvYcmXZtidjhZ_p8KNfgI6beZZ2jb-duYAsHxHXQCRIyP2B9shbzfnUeGzeGSuSg3lazhrxPMArf7h8=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczOgteb_3qX9KgndjuYUJWZfuu7I05L99PZ9AvYcmXZtidjhZ_p8KNfgI6beZZ2jb-duYAsHxHXQCRIyP2B9shbzfnUeGzeGSuSg3lazhrxPMArf7h8=w600-h400-k-no" alt="Luxury shingle home with painted facade, white columns and warm wood steps" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">02</div><div><h3>Shingle Home Transformation</h3><p class="gallery-desc">Painted cedar shingle facade, restored white columns and railings, with refinished warm wood entry steps.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">02</div><div><h3 data-i18n="gallery.c02t">Shingle Home Transformation</h3><p class="gallery-desc" data-i18n="gallery.c02d">Painted cedar shingle facade, restored white columns and railings, with refinished warm wood entry steps.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMxKlr-_oiAhZwfiE20B5qLk5T3biouAnfRastXAWKyFTcBeqga4r47u5CkNMv6Mutrh5p_Kbxqp22IRPgJhQbo515yGCJzvSQyvo0ob1qBUc5BQJI=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczMxKlr-_oiAhZwfiE20B5qLk5T3biouAnfRastXAWKyFTcBeqga4r47u5CkNMv6Mutrh5p_Kbxqp22IRPgJhQbo515yGCJzvSQyvo0ob1qBUc5BQJI=w600-h400-k-no" alt="Cottage exterior painted white with porch swing and picket fence" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">03</div><div><h3>Cottage Exterior &amp; Porch</h3><p class="gallery-desc">Exterior painted in classic white with all trim freshly coated — from the porch ceiling to the white picket fence.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">03</div><div><h3 data-i18n="gallery.c03t">Cottage Exterior &amp; Porch</h3><p class="gallery-desc" data-i18n="gallery.c03d">Exterior painted in classic white with all trim freshly coated — from the porch ceiling to the white picket fence.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczPbYuhxAsR_T-EuIBqz6xyRU1akHVkbLlLyZR9A6WzIy53_7mACZ61pbZ0xs_KphvNC07m9bK6NWvutE5-l9aoPOYv4iN1bN28avknzx9hNni0u9ik=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczPbYuhxAsR_T-EuIBqz6xyRU1akHVkbLlLyZR9A6WzIy53_7mACZ61pbZ0xs_KphvNC07m9bK6NWvutE5-l9aoPOYv4iN1bN28avknzx9hNni0u9ik=w600-h400-k-no" alt="Two-story Hamptons colonial freshly painted gray with white columns" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">04</div><div><h3>Hampton Bays Colonial</h3><p class="gallery-desc">Full exterior repaint of this elegant two-story colonial — gray shingle siding, white gable trim and grand columned entryway.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">04</div><div><h3 data-i18n="gallery.c04t">Hampton Bays Colonial</h3><p class="gallery-desc" data-i18n="gallery.c04d">Full exterior repaint of this elegant two-story colonial — gray shingle siding, white gable trim and grand columned entryway.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczN5kWuDUtNTbtFBJdVx9W58dx5VNFqeMPYcS4m7F7QBFQdp3GVunvQz6BgMvyva93o1KUrXTYdAnuQI7Rl9BGfIwQYCajhkT58gEK0AI8cs7gy_om6S=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczN5kWuDUtNTbtFBJdVx9W58dx5VNFqeMPYcS4m7F7QBFQdp3GVunvQz6BgMvyva93o1KUrXTYdAnuQI7Rl9BGfIwQYCajhkT58gEK0AI8cs7gy_om6S=w600-h400-k-no" alt="Finished wraparound porch with dark deck stain and white columns" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">05</div><div><h3>Finished Wraparound Porch</h3><p class="gallery-desc">Completed porch project — dark composite deck stain, white painted columns, trim and ceiling on a Hampton-style home.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">05</div><div><h3 data-i18n="gallery.c05t">Finished Wraparound Porch</h3><p class="gallery-desc" data-i18n="gallery.c05d">Completed porch project — dark composite deck stain, white painted columns, trim and ceiling on a Hampton-style home.</p></div></div>
         </article>
-        <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOJI6lnIJj8ASIFS_C3sGMSezRTfHQv3WOoZWZW4ZjF7GRb-fydWbfQEEO05B_0PafJkjlBqjn9zM1AGjHVT4HmA6OfF9YelwcKO30szyLkipShJo-U=w1200-h900-k-no')">
+        <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMjaTANXBFYq-OcnyJGyiEj0gaeVeDMZ8Ppqhetb4mN4Rr19LhiGPv2c-Cjcz2WieiZwz8uyJbI98EtaaYxRgB0IaSLrqBFtaeUvvOgdb3ctLgAM_A=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
-            <img src="https://lh3.googleusercontent.com/pw/AP1GczOJI6lnIJj8ASIFS_C3sGMSezRTfHQv3WOoZWZW4ZjF7GRb-fydWbfQEEO05B_0PafJkjlBqjn9zM1AGjHVT4HmA6OfF9YelwcKO30szyLkipShJo-U=w600-h400-k-no" alt="Summer ready home painting" loading="lazy">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMjaTANXBFYq-OcnyJGyiEj0gaeVeDMZ8Ppqhetb4mN4Rr19LhiGPv2c-Cjcz2WieiZwz8uyJbI98EtaaYxRgB0IaSLrqBFtaeUvvOgdb3ctLgAM_A=w600-h400-k-no" alt="Cedar porch with dark hardwood deck and painted white ceiling" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">06</div><h3>Summer Ready Home</h3></div>
-        </article>
-        <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczONlxnseZtayhTGNml8A_fqojRghLm3jnCphhFnrf_tr2aE4bKI9Wbxd3ytuUubXDHV12NCzRjaDx69bwNpdIMc5Nc788WKuFRNtpBtu5_IRef0wdNF=w1200-h900-k-no')">
-          <div class="gallery-img-wrap">
-            <img src="https://lh3.googleusercontent.com/pw/AP1GczONlxnseZtayhTGNml8A_fqojRghLm3jnCphhFnrf_tr2aE4bKI9Wbxd3ytuUubXDHV12NCzRjaDx69bwNpdIMc5Nc788WKuFRNtpBtu5_IRef0wdNF=w600-h400-k-no" alt="Kitchen painting update" loading="lazy">
-          </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">07</div><h3>Kitchen Update</h3></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">06</div><div><h3 data-i18n="gallery.c06t">Cedar Porch Restoration</h3><p class="gallery-desc" data-i18n="gallery.c06d">Restored cedar shingle exterior with freshly stained dark hardwood deck and painted white tongue-and-groove porch ceiling.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMDDdyFrscvOQ6mEtiRllYfy_Od_qBFzI4T5ArkhwM0ektNuAFgE4CCoCH4YEfxAWrIW1KI0vC2GGpuWy9rKEJKDonmTbzBYmWpwQ7-aHMCEcMcYqk=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczMDDdyFrscvOQ6mEtiRllYfy_Od_qBFzI4T5ArkhwM0ektNuAFgE4CCoCH4YEfxAWrIW1KI0vC2GGpuWy9rKEJKDonmTbzBYmWpwQ7-aHMCEcMcYqk=w600-h400-k-no" alt="White garage doors with arched windows on Hamptons cedar shingle home" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">07</div><div><h3>Garage Doors &amp; Trim</h3><p class="gallery-desc">Bright white exterior paint on arched garage doors with decorative oval window — classic Hamptons cedar shingle home.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">07</div><div><h3 data-i18n="gallery.c07t">Garage Doors &amp; Trim</h3><p class="gallery-desc" data-i18n="gallery.c07d">Bright white exterior paint on arched garage doors with decorative oval window — classic Hamptons cedar shingle home.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczPf85K9eVOYWLzhsiYkwDDKMlQWwJuwrWXPTZjrD334KpmbnKPh9KtiRMp-K5UElALxtKeeb_mVBPrv4wc80QUsbSFC6DpHrZIdU9f2xLPtcuyVl_1T=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczPf85K9eVOYWLzhsiYkwDDKMlQWwJuwrWXPTZjrD334KpmbnKPh9KtiRMp-K5UElALxtKeeb_mVBPrv4wc80QUsbSFC6DpHrZIdU9f2xLPtcuyVl_1T=w600-h400-k-no" alt="New cedar shingles on waterfront home roof with bay views" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">08</div><div><h3>Waterfront Cedar Shingle Roof</h3><p class="gallery-desc">New cedar shingles installed and stained on a waterfront Hampton Bays home — with stunning bay views from the rooftop.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">08</div><div><h3 data-i18n="gallery.c08t">Waterfront Cedar Shingle Roof</h3><p class="gallery-desc" data-i18n="gallery.c08d">New cedar shingles installed and stained on a waterfront Hampton Bays home — with stunning bay views from the rooftop.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOby7X5oKcaDPEKmiplKOTpHZ81FZIeUiVnmdfDjQta1uoi4YUoVlWy68M8YfTSg2WfEYLVYQYa3-nEHdqYVa7HUQMTIuwBuvjnESPIoGfzA1ZW07pI=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczOby7X5oKcaDPEKmiplKOTpHZ81FZIeUiVnmdfDjQta1uoi4YUoVlWy68M8YfTSg2WfEYLVYQYa3-nEHdqYVa7HUQMTIuwBuvjnESPIoGfzA1ZW07pI=w600-h400-k-no" alt="Two painters on roof applying exterior finish coat with safety equipment" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">09</div><div><h3>Roof-Level Exterior Work</h3><p class="gallery-desc">Our team paints from the top — two painters on roof with full safety equipment applying exterior finish coat.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">09</div><div><h3 data-i18n="gallery.c09t">Roof-Level Exterior Work</h3><p class="gallery-desc" data-i18n="gallery.c09d">Our team paints from the top — two painters on roof with full safety equipment applying exterior finish coat.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMpwVDd4OTcazPRN7oTG9xtgT7FY_OgrW9YEQK4mk4O2Gl9d9s_7dD7ei6VePrwZcb5MRGY2tBRZPyNzg24KDu7Hob_AZs4zstziv7GaBCFTyjHiAbh=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczMpwVDd4OTcazPRN7oTG9xtgT7FY_OgrW9YEQK4mk4O2Gl9d9s_7dD7ei6VePrwZcb5MRGY2tBRZPyNzg24KDu7Hob_AZs4zstziv7GaBCFTyjHiAbh=w600-h400-k-no" alt="Three Geda Painting and Restoration branded vans ready for service" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">10</div><div><h3>Our Fleet, Ready to Work</h3><p class="gallery-desc">Three fully equipped Geda Painting &amp; Restoration vehicles staged and ready — serving the East End of Long Island.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">10</div><div><h3 data-i18n="gallery.c10t">Our Fleet, Ready to Work</h3><p class="gallery-desc" data-i18n="gallery.c10d">Three fully equipped Geda Painting &amp; Restoration vehicles staged and ready — serving the East End of Long Island.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMaTc8Nri7ZRD5e3BS0yBcYUFo7tFbaSxRuDD6WsHG2QegLwvPuTqwaCJN5q1VdA8FqqxfGWevQePDHyH-wSfRaXJcqbr1fDbZB_s-AI1qlNiwqLFM9=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczMaTc8Nri7ZRD5e3BS0yBcYUFo7tFbaSxRuDD6WsHG2QegLwvPuTqwaCJN5q1VdA8FqqxfGWevQePDHyH-wSfRaXJcqbr1fDbZB_s-AI1qlNiwqLFM9=w600-h400-k-no" alt="Private home theater with deep charcoal walls and leather recliners" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">11</div><div><h3>Private Home Theater</h3><p class="gallery-desc">Custom-painted home theater featuring deep charcoal accent walls, crown molding trim and precision detail work throughout.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">11</div><div><h3 data-i18n="gallery.c11t">Private Home Theater</h3><p class="gallery-desc" data-i18n="gallery.c11d">Custom-painted home theater featuring deep charcoal accent walls, crown molding trim and precision detail work throughout.</p></div></div>
         </article>
         <article class="gallery-card" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczPlIMJKyihFR6pIiJjzEzjiJx9GH6EKdM9Eun-GisMe0CD9xzbnY5m33bOunDPjDwYnETlEeilTQNr0WQg9cfjfKrT6cjxVeVTNasDD7s85YFUEApk=w1200-h900-k-no')">
           <div class="gallery-img-wrap">
             <img src="https://lh3.googleusercontent.com/pw/AP1GczPlIMJKyihFR6pIiJjzEzjiJx9GH6EKdM9Eun-GisMe0CD9xzbnY5m33bOunDPjDwYnETlEeilTQNr0WQg9cfjfKrT6cjxVeVTNasDD7s85YFUEApk=w600-h400-k-no" alt="Long residential hallway after full interior repaint in crisp white" loading="lazy">
           </div>
-          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">12</div><div><h3>Full Interior Repaint</h3><p class="gallery-desc">Long residential hallway repainted in crisp white — floor fully protected, walls, ceilings and trim all freshly coated.</p></div></div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">12</div><div><h3 data-i18n="gallery.c12t">Full Interior Repaint</h3><p class="gallery-desc" data-i18n="gallery.c12d">Long residential hallway repainted in crisp white — floor fully protected, walls, ceilings and trim all freshly coated.</p></div></div>
+        </article>
+
+        <!-- Extra cards revealed on "View more" -->
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOwtwuyrO4_DVzCrHoMS4xeB3dtGceXdY4n62Qz4VEoRvx0RCjsZweRCf31dhajIBOw6qx-7D5C0kCItYLD1r8Haiwet2Wenmdqi2GutsjSN-8Bfdo=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOwtwuyrO4_DVzCrHoMS4xeB3dtGceXdY4n62Qz4VEoRvx0RCjsZweRCf31dhajIBOw6qx-7D5C0kCItYLD1r8Haiwet2Wenmdqi2GutsjSN-8Bfdo=w600-h400-k-no" alt="Cedar shingle home with white curved porch arch and painted trim" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">13</div><div><h3 data-i18n="gallery.c13t">Cedar Shingle Arch</h3><p class="gallery-desc" data-i18n="gallery.c13d">Full exterior of a Long Island shingle home — white curved porch arch, fresh siding coat and detailed painted trim.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczO697PdyqVFuzh7YOJMO2WgxIMUJg13-3YhUwuMmZ7AlZ-gYEIOkEr0xMgzMha0ktE6NtPjxHnS8CtaSeYfk0zhkNdA33XlxJ_b0Tc1_JA6UC78M6E=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO697PdyqVFuzh7YOJMO2WgxIMUJg13-3YhUwuMmZ7AlZ-gYEIOkEr0xMgzMha0ktE6NtPjxHnS8CtaSeYfk0zhkNdA33XlxJ_b0Tc1_JA6UC78M6E=w600-h400-k-no" alt="Clean sage green house exterior with white trim and manicured lawn" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">14</div><div><h3 data-i18n="gallery.c14t">Sage Green Exterior</h3><p class="gallery-desc" data-i18n="gallery.c14d">Clean sage green exterior with crisp white trim — wide curb appeal and beautifully maintained landscaping.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczPvOM0QIpFpwZri7DBdryLmcVXIL0wl79J2u5ueTY2F3ECSGSyFCPs6638DoGZ4PLI0ZLX8-t1KueAPSIpppLZwgj9U9BG6ODEgh6H1kAQLhZZsfE4=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPvOM0QIpFpwZri7DBdryLmcVXIL0wl79J2u5ueTY2F3ECSGSyFCPs6638DoGZ4PLI0ZLX8-t1KueAPSIpppLZwgj9U9BG6ODEgh6H1kAQLhZZsfE4=w600-h400-k-no" alt="Porch with white shingle siding dark deck and outdoor dining furniture" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">15</div><div><h3 data-i18n="gallery.c15t">Porch Dining Area</h3><p class="gallery-desc" data-i18n="gallery.c15d">Freshly painted wraparound porch with stained hardwood deck — white shingle walls and a perfect outdoor dining space.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOmKH1ETD1sP1_Mge8yiitT89ZpJuinquaS2SkrVWTsWiMV9amLV9XEWpQ-oMe8YmIvgxHuwgPtavOqNXC6WvfkA9xAnoU8YUtK3lDtGjli-w-JUuC0=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOmKH1ETD1sP1_Mge8yiitT89ZpJuinquaS2SkrVWTsWiMV9amLV9XEWpQ-oMe8YmIvgxHuwgPtavOqNXC6WvfkA9xAnoU8YUtK3lDtGjli-w-JUuC0=w600-h400-k-no" alt="Painter on extended ladder on coastal house second-story siding" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">16</div><div><h3 data-i18n="gallery.c16t">High-Reach Exterior Work</h3><p class="gallery-desc" data-i18n="gallery.c16d">Painter on extended ladder reaching second-story siding — full exterior coverage on a coastal Hamptons residence.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczOds76ejQbTnPIi1t-nUrwSmypGnhM1zCgRtp_Kv9dTDLQDBqf2JFRTOI4p1Ek2uCYOJaRDaJNbJblbwPf7VDtnK8hp4VOh8asKMt_1up7jRJ5Fyi0S=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOds76ejQbTnPIi1t-nUrwSmypGnhM1zCgRtp_Kv9dTDLQDBqf2JFRTOI4p1Ek2uCYOJaRDaJNbJblbwPf7VDtnK8hp4VOh8asKMt_1up7jRJ5Fyi0S=w600-h400-k-no" alt="Luxury bowling alley with clean white walls and recessed ceiling" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">17</div><div><h3 data-i18n="gallery.c17t">Luxury Entertainment Room</h3><p class="gallery-desc" data-i18n="gallery.c17d">Interior painting on a premium bowling alley and entertainment room — clean white walls and recessed ceiling detail.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczNdPuYSI8v71RbO1Bx-aRJlhikhr41qAi0XNFVQ2Z9wAOyMxkf1nEDqkaCNC6E_JAto2pEr746aHQFDRf9J1xTRv-EJ8vYTqSKI-9HbZA4xVskL_eXX=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNdPuYSI8v71RbO1Bx-aRJlhikhr41qAi0XNFVQ2Z9wAOyMxkf1nEDqkaCNC6E_JAto2pEr746aHQFDRf9J1xTRv-EJ8vYTqSKI-9HbZA4xVskL_eXX=w600-h400-k-no" alt="Luxury bar with dark built-in shelving and velvet seating" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">18</div><div><h3 data-i18n="gallery.c18t">Custom Bar Interior</h3><p class="gallery-desc" data-i18n="gallery.c18d">Custom bar area with dark built-in shelving and velvet seating — painted and detailed to match a luxury finish.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMaj38fnfoSr_T2xRpU5k2_8OR3JhtgDI0MLhOPHUwvUewt6uRsHomr94lRzQp06--3JX3-CIcVl4QcOKrIZS5AguqPkB9oZRdXGhc_pkZ7r4zeRztK=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMaj38fnfoSr_T2xRpU5k2_8OR3JhtgDI0MLhOPHUwvUewt6uRsHomr94lRzQp06--3JX3-CIcVl4QcOKrIZS5AguqPkB9oZRdXGhc_pkZ7r4zeRztK=w600-h400-k-no" alt="All-white colonial farmhouse complete exterior repaint" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">19</div><div><h3 data-i18n="gallery.c19t">White Colonial Exterior</h3><p class="gallery-desc" data-i18n="gallery.c19d">Complete exterior repaint of a formal white colonial — crisp finish on all siding, shutters and trim details.</p></div></div>
+        </article>
+        <article class="gallery-card gallery-extra" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczM2jybGIbI2ErLsBNQVhbiZKhZDy8eMtsVFkO0-rqawpKQZ32KRP1BuOfmhHinPboU_W9jQhWVh7UwxY1TrLTLi-aF3krEAYHtYzNJYFAnMq4-_QLbU=w1200-h900-k-no')">
+          <div class="gallery-img-wrap">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczM2jybGIbI2ErLsBNQVhbiZKhZDy8eMtsVFkO0-rqawpKQZ32KRP1BuOfmhHinPboU_W9jQhWVh7UwxY1TrLTLi-aF3krEAYHtYzNJYFAnMq4-_QLbU=w600-h400-k-no" alt="Modern home entrance dark painted canopy with white brick facade" loading="lazy">
+          </div>
+          <div class="gallery-caption"><div class="gallery-badge" aria-hidden="true">20</div><div><h3 data-i18n="gallery.c20t">Modern Home Entrance</h3><p class="gallery-desc" data-i18n="gallery.c20d">Dark-painted canopy and entrance detail on a modern Hampton Bays home — bold contrast with white brick facade.</p></div></div>
         </article>
       </div>
       <div class="gallery-footer">
-        <a href="https://photos.google.com/share/AF1QipMaYxKvCYpHm__A85cQYVaUXNNfihY0jYsAfkXJU6p05YyB51HYwPn9p88VxFS8MQ?key=Wl9mMzBsZTFXdjVNd05vcV9hX3JmVUJGTmJORkJn" target="_blank" rel="noopener noreferrer" class="gallery-all-link">
+        <button id="gallery-more-btn" class="gallery-all-link" onclick="toggleGallery()" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          View all project photos
-        </a>
+          <span data-i18n="gallery.viewMore">View more projects</span>
+        </button>
       </div>
     </div>
   </section>
@@ -1007,10 +1054,30 @@
           },
           gallery: {
             eyebrow: 'Gallery',
-            title: 'Recent Work Preview',
-            text: 'Project photos coming soon.',
-            placeholder: 'Project photo placeholder',
-            comingSoon: 'Project photos coming soon'
+            title: 'Recent Work',
+            text: 'A look at completed residential projects across Hampton Bays and the surrounding areas.',
+            viewMore: 'View more projects',
+            viewLess: 'View fewer projects',
+            c01t: 'Colonial Estate Exterior', c01d: 'Freshly painted sage green siding with crisp white trim — a Hampton Bays colonial with full-length front porch and white columns.',
+            c02t: 'Shingle Home Transformation', c02d: 'Painted cedar shingle facade, restored white columns and railings, with refinished warm wood entry steps.',
+            c03t: 'Cottage Exterior & Porch', c03d: 'Exterior painted in classic white with all trim freshly coated — from the porch ceiling to the white picket fence.',
+            c04t: 'Hampton Bays Colonial', c04d: 'Full exterior repaint of this elegant two-story colonial — gray shingle siding, white gable trim and grand columned entryway.',
+            c05t: 'Finished Wraparound Porch', c05d: 'Completed porch project — dark composite deck stain, white painted columns, trim and ceiling on a Hampton-style home.',
+            c06t: 'Cedar Porch Restoration', c06d: 'Restored cedar shingle exterior with freshly stained dark hardwood deck and painted white tongue-and-groove porch ceiling.',
+            c07t: 'Garage Doors & Trim', c07d: 'Bright white exterior paint on arched garage doors with decorative oval window — classic Hamptons cedar shingle home.',
+            c08t: 'Waterfront Cedar Shingle Roof', c08d: 'New cedar shingles installed and stained on a waterfront Hampton Bays home — with stunning bay views from the rooftop.',
+            c09t: 'Roof-Level Exterior Work', c09d: 'Our team paints from the top — two painters on roof with full safety equipment applying exterior finish coat.',
+            c10t: 'Our Fleet, Ready to Work', c10d: 'Three fully equipped Geda Painting & Restoration vehicles staged and ready — serving the East End of Long Island.',
+            c11t: 'Private Home Theater', c11d: 'Custom-painted home theater featuring deep charcoal accent walls, crown molding trim and precision detail work throughout.',
+            c12t: 'Full Interior Repaint', c12d: 'Long residential hallway repainted in crisp white — floor fully protected, walls, ceilings and trim all freshly coated.',
+            c13t: 'Cedar Shingle Arch', c13d: 'Full exterior of a Long Island shingle home — white curved porch arch, fresh siding coat and detailed painted trim.',
+            c14t: 'Sage Green Exterior', c14d: 'Clean sage green exterior with crisp white trim — wide curb appeal and beautifully maintained landscaping.',
+            c15t: 'Porch Dining Area', c15d: 'Freshly painted wraparound porch with stained hardwood deck — white shingle walls and a perfect outdoor dining space.',
+            c16t: 'High-Reach Exterior Work', c16d: 'Painter on extended ladder reaching second-story siding — full exterior coverage on a coastal Hamptons residence.',
+            c17t: 'Luxury Entertainment Room', c17d: 'Interior painting on a premium bowling alley and entertainment room — clean white walls and recessed ceiling detail.',
+            c18t: 'Custom Bar Interior', c18d: 'Custom bar area with dark built-in shelving and velvet seating — painted and detailed to match a luxury finish.',
+            c19t: 'White Colonial Exterior', c19d: 'Complete exterior repaint of a formal white colonial — crisp finish on all siding, shutters and trim details.',
+            c20t: 'Modern Home Entrance', c20d: 'Dark-painted canopy and entrance detail on a modern Hampton Bays home — bold contrast with white brick facade.'
           },
           contact: {
             eyebrow: 'Contact',
@@ -1122,10 +1189,30 @@
           },
           gallery: {
             eyebrow: 'Galería',
-            title: 'Vista Previa de Trabajos',
-            text: 'Fotos de proyectos próximamente.',
-            placeholder: 'Espacio para foto del proyecto',
-            comingSoon: 'Fotos de proyectos próximamente'
+            title: 'Trabajos Recientes',
+            text: 'Un vistazo a proyectos residenciales completados en Hampton Bays y las áreas circundantes.',
+            viewMore: 'Ver más proyectos',
+            viewLess: 'Ver menos proyectos',
+            c01t: 'Exterior de Casa Colonial', c01d: 'Revestimiento verde salvia recién pintado con molduras blancas — colonial de Hampton Bays con porche frontal y columnas blancas.',
+            c02t: 'Transformación en Ripias de Cedro', c02d: 'Fachada de ripias de cedro pintada, columnas y barandillas blancas restauradas, con escalones de madera refinishados.',
+            c03t: 'Exterior de Cabaña y Porche', c03d: 'Exterior pintado en blanco clásico con todas las molduras recién aplicadas — del techo del porche a la cerca blanca.',
+            c04t: 'Colonial de Hampton Bays', c04d: 'Repintado completo de esta elegante colonial de dos plantas — siding de ripias gris, molduras blancas y entrada con columnas.',
+            c05t: 'Porche Envolvente Terminado', c05d: 'Proyecto de porche completado — tintura oscura en deck composite, columnas blancas pintadas, molduras y techo estilo Hampton.',
+            c06t: 'Restauración de Porche de Cedro', c06d: 'Exterior de ripias de cedro restaurado con deck de madera dura oscuro y techo de machihembrado pintado en blanco.',
+            c07t: 'Puertas de Garaje y Molduras', c07d: 'Pintura exterior blanca brillante en puertas arqueadas con ventana ovalada decorativa — clásica casa de ripias estilo Hamptons.',
+            c08t: 'Techo de Ripias Frente al Mar', c08d: 'Nuevas ripias de cedro instaladas en casa frente al mar en Hampton Bays — con vistas al estuario desde el techo.',
+            c09t: 'Trabajo Exterior desde el Techo', c09d: 'Nuestro equipo pinta desde arriba — dos pintores en el techo con equipo de seguridad completo aplicando acabado exterior.',
+            c10t: 'Nuestra Flota, Lista para Trabajar', c10d: 'Tres vehículos completamente equipados de Geda Painting listos para servir — cubriendo el East End de Long Island.',
+            c11t: 'Teatro Privado en Casa', c11d: 'Teatro pintado a medida con paredes de acento carbón oscuro, molduras decorativas y trabajo de detalle de precisión.',
+            c12t: 'Repintado Interior Completo', c12d: 'Largo pasillo residencial repintado en blanco puro — suelo protegido, paredes, techos y molduras recién aplicados.',
+            c13t: 'Arco de Porche en Ripias', c13d: 'Exterior completo de casa de ripias — arco de porche blanco curvo, nueva mano de siding y detalles de molduras pintadas.',
+            c14t: 'Exterior Verde Salvia', c14d: 'Exterior verde salvia limpio con molduras blancas — amplio atractivo desde la calle y jardín cuidado.',
+            c15t: 'Área de Comedor en Porche', c15d: 'Porche envolvente recién pintado con deck de madera manchado — paredes de ripias blancas y espacio perfecto al aire libre.',
+            c16t: 'Trabajo Exterior en Altura', c16d: 'Pintor en escalera extendida alcanzando el siding del segundo piso — cobertura exterior completa en residencia costera.',
+            c17t: 'Sala de Entretenimiento de Lujo', c17d: 'Pintura interior en bolera y sala de entretenimiento premium — paredes blancas limpias y detalle de techo empotrado.',
+            c18t: 'Interior de Bar Personalizado', c18d: 'Bar personalizado con estantes oscuros empotrados y asientos de terciopelo — acabado de lujo pintado con precisión.',
+            c19t: 'Exterior Colonial Blanco', c19d: 'Repintado exterior completo de colonial blanca formal — acabado impecable en siding, persianas y molduras.',
+            c20t: 'Entrada de Casa Moderna', c20d: 'Marquesína pintada en oscuro en casa moderna de Hampton Bays — contraste llamativo con fachada de ladrillo blanco.'
           },
           contact: {
             eyebrow: 'Contacto',
@@ -1318,6 +1405,18 @@
     })();
   </script>
   <script>
+    function toggleGallery() {
+      var grid = document.getElementById('galleryGrid');
+      var btn = document.getElementById('gallery-more-btn');
+      var expanded = grid.classList.toggle('show-all');
+      var span = btn.querySelector('[data-i18n]');
+      var lang = localStorage.getItem('geda-language') || (navigator.language && navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en');
+      span.dataset.i18n = expanded ? 'gallery.viewLess' : 'gallery.viewMore';
+      span.textContent = expanded
+        ? (lang === 'es' ? 'Ver menos proyectos' : 'View fewer projects')
+        : (lang === 'es' ? 'Ver más proyectos' : 'View more projects');
+      if (expanded) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     function openLightbox(src) {
       var overlay = document.getElementById('lb-overlay');
       var img = document.getElementById('lb-img');
